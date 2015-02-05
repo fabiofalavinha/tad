@@ -1,16 +1,27 @@
-var BlogPersitence = function() {
+'use strict';
 
-  if (!Modernizr.localstorage) {
-    aler('Your device does not support HTML5 Local Storage');
-    return;
-  }
+var tad = tad || {};
 
-  function saveUser(user) {
-    window.localStorage['user'] = user;
-  }
+tad.BlogPersitence = (function (BlogPersitence) {
 
-  function getCurrentUser() {
-    return window.localStorage['user'];
-  }
+    $(function () {
+        if (!Modernizr.localstorage) {
+            aler('Your device does not support HTML5 Local Storage');
+            return;
+        }
+    });
 
-}();
+    function setCurrentUser(user) {
+        window.sessionStorage['user'] = user;
+    };
+
+    function getCurrentUser() {
+        return window.sessionStorage['user'];
+    };
+
+    BlogPersitence.setCurrentUser = setCurrentUser;
+    BlogPersitence.getCurrentUser = getCurrentUser;
+
+    return BlogPersitence;
+
+})(tad.BlogPersitence || {});

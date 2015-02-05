@@ -1,8 +1,10 @@
-var Model = function() {
+'use strict';
 
-  function User(id, name) {
-    this.id = id;
-    this.name = name;
-  }
+var Model = function () {
+
+    function User(id, name) {
+        this.id = id;
+        this.name = name;
+    }
 
 }();
