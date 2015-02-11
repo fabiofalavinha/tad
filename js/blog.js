@@ -6,12 +6,12 @@ tad.Blog = (function (Blog, $) {
 
     function expandContent(content, trigger) {
         content.removeClass('collapsed').addClass('expanded');
-        trigger.text('Mostrar menos');
+        trigger.text('Menos');
     };
 
     function collapseContent(content, trigger) {
         content.removeClass('expanded').addClass('collapsed');
-        trigger.text('Continuar lendo ...');
+        trigger.text('Mais...');
     };
 
     Blog.addPosts = function (posts) {
