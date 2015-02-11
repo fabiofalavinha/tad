@@ -38,7 +38,7 @@
     <div class="container">
 
         <form class="form-signin" role="form" style="margin-top: 5%;">
-            <h2 class="form-signin-heading">Login</h2>
+            <h2 class="form-signin-heading">Alterar senha</h2>
             <input type="password" class="form-control password" placeholder="Senha" required autofocus>
             <input type="password" class="form-control newPassword" placeholder="Nova Senha" required>
             <input type="password" class="form-control confirmPassword" placeholder="Confirmar Senha" required>
@@ -56,18 +56,22 @@
 
     <script type="text/javascript">
 
-        $(function () {
-            var emailTextBox = document.querySelector('input[type="email"]');
-            emailTextBox.oninvalid = function (e) {
-                e.target.setCustomValidity("");
-                if (!e.target.validity.valid) {
-                    if (e.target.value.length == 0) {
-                        e.target.setCustomValidity("Campo 'Email' � obrigat�rio");
-                    } else {
-                        e.target.setCustomValidity("Email inv�lido");
-                    }
-                };
+        function invalidInput(input) {
+            input.setCustomValidity("");
+            if (!input.validity.valid) {
+                if (input.value.length == 0) {
+                    input.setCustomValidity("Campo '" + input.placeholder + "' é obrigatório");
+                } else {
+                    input.setCustomValidity("" + input.placeholder + " inválido");
+                }
             };
+        };
+        $(function () {
+            $('input').each(function (index, input) {
+                input.oninvalid = function (e) {
+                    invalidInput(e.target);
+                };
+            });
 
             $('form.form-signin').on('submit', function (e) {
                 e.preventDefault();

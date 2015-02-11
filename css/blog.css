@@ -273,3 +273,13 @@ h6, .h6 {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.messages {
+    padding: 1em;
+    background-color: #FFCCCC;
+    border-radius: 0.5em;
+    margin: 1em;
+    border: 1px solid #FFAAAA;
+    box-shadow: 1px 1px 5px;
+    text-align: center;
+}

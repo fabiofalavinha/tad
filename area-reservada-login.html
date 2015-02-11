@@ -36,8 +36,8 @@
     </div>
 
     <div class="container">
-        <div class="messages"></div>
         <form class="form-signin" role="form" style="margin-top: 5%;">
+            <div class="messages" style="display:none;"></div>
             <h2 class="form-signin-heading">Login</h2>
             <input type="email" class="form-control email" placeholder="Email" required autofocus>
             <input type="password" class="form-control password" placeholder="Senha" required>
@@ -52,6 +52,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="js/service.js"></script>
+    <script src="js/persistence.js"></script>
 
     <script type="text/javascript">
 
@@ -73,10 +74,15 @@
                 var formSignin = $(this);
                 tad.Service.authenticate(formSignin.find('.email').val(), formSignin.find('.password').val())
                     .done(function () {
-                        window.location.href = 'area-reservada.html';
+                        var user = tad.BlogPersitence.getCurrentUser();
+                        if (!!user) {
+                            window.location.href = 'area-reservada.html';
+                        } else {
+                            $('.messages').text('Invalid email or password!').show();
+                        }
                     })
-                    .error(function (message) {
-                        $('.messages').text(message);
+                    .error(function (xhr, error, status) {
+                        $('.messages').text(error);
                     });
             });
 

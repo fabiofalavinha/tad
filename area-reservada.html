@@ -66,7 +66,7 @@
                 </div>
                 <div class="sidebar-module">
                     <h4>Arquivos</h4>
-                    <ol class="list-unstyled">
+                    <ol class="archive-list list-unstyled">
                         <li><a href="#">January 2014</a></li>
                         <li><a href="#">December 2013</a></li>
                         <li><a href="#">November 2013</a></li>
@@ -109,25 +109,36 @@
 
     <script src="js/blog.js"></script>
     <script src="js/service.js"></script>
+    <script src="js/persistence.js"></script>
 
     <!-- Templates -->
-    <script id="blog-post-template" type="text/x-jquery-tmpl">
-        <div class="blog-post">
-            <h2 class="blog-post-title">$title</h2>
-            <p class="blog-post-meta"><span class="blog-post-published">$published</span> by <a href="#" class="blog-post-publishedBy">$publishedBy</a></p>
-            <div class="blog-post-content collapsed">$content</div>
-            <a href="#" class="btn btn-primary read-more">Continuar lendo ...</a>
-        </div>
+    <script id="archive-template" type="text/x-jquery-tmpl">
+        <li><a href="#">${{date}}</a></li>
     </script>
 
     <!-- Scripts -->
     <script type="text/javascript">
 
         $(function () {
-            tad.Service.getPrivatePosts()
-                .done(function (posts) {
-                    tad.Blog.addPosts(posts);
+            var user = tad.BlogPersitence.getCurrentUser();
+            if (!user) {
+                window.location.href = 'area-reservada-login.html';
+            }
+            else {
+                $.get('_blog.tmpl.html', function (template) {
+                    $('body').append(template);
+                    tad.Service.getPrivatePosts()
+                        .done(function (posts) {
+                            tad.Blog.addPosts(posts);
+                        });
                 });
+                tad.Service.getArchives()
+                    .done(function (archives) {
+                        $(archives).each(function (index, a) {
+                            $('#archive-template').tmpl(a).prependTo('archive-list');
+                        });
+                    });
+            }
         });
 
     </script>

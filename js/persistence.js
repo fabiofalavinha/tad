@@ -5,10 +5,10 @@ var tad = tad || {};
 tad.BlogPersitence = (function (BlogPersitence) {
 
     $(function () {
-        if (!Modernizr.localstorage) {
-            aler('Your device does not support HTML5 Local Storage');
-            return;
-        }
+        //if (!Modernizr.localstorage) {
+        //    aler('Your device does not support HTML5 Local Storage');
+        //    return;
+        //}
     });
 
     function setCurrentUser(user) {
