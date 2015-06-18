@@ -12,11 +12,11 @@ tad.BlogPersitence = (function (BlogPersitence) {
     });
 
     function setCurrentUser(user) {
-        window.sessionStorage['user'] = user;
+        window.sessionStorage['user'] = JSON.stringify(user);
     };
 
     function getCurrentUser() {
-        return window.sessionStorage['user'];
+        return JSON.parse(window.sessionStorage['user'] ?? "{}");
     };
 
     BlogPersitence.setCurrentUser = setCurrentUser;

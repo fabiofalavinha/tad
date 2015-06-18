@@ -283,3 +283,7 @@ h6, .h6 {
     box-shadow: 1px 1px 5px;
     text-align: center;
 }
+
+.read-more {
+    margin-top: 1em;
+}

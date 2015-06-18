@@ -71,8 +71,9 @@
             </div>
 
             <div class="col-sm-8 blog-main">
+                <span class="btn btn-lg btn-warning loading" style="cursor: default; margin-bottom: 1em;"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading...</span>
                 <div class="blog-posts-container"></div>
-                <ul class="pager">
+                <ul class="pager" style="display:none;">
                     <li><a href="#">Anteriores</a></li>
                 </ul>
 
@@ -86,20 +87,7 @@
                 </div>
                 <div class="sidebar-module">
                     <h4>Arquivos</h4>
-                    <ol class="list-unstyled">
-                        <li><a href="#">January 2014</a></li>
-                        <li><a href="#">December 2013</a></li>
-                        <li><a href="#">November 2013</a></li>
-                        <li><a href="#">October 2013</a></li>
-                        <li><a href="#">September 2013</a></li>
-                        <li><a href="#">August 2013</a></li>
-                        <li><a href="#">July 2013</a></li>
-                        <li><a href="#">June 2013</a></li>
-                        <li><a href="#">May 2013</a></li>
-                        <li><a href="#">April 2013</a></li>
-                        <li><a href="#">March 2013</a></li>
-                        <li><a href="#">February 2013</a></li>
-                    </ol>
+                    <ol class="archive-list list-unstyled"></ol>
                 </div>
             </div><!-- /.blog-sidebar -->
 
@@ -134,11 +122,48 @@
     <script type="text/javascript">
 
         $(function () {
+            $('.loading').show();
             $.get('_blog.tmpl.html', function (template) {
                 $('body').append(template);
                 tad.Service.getPublicPosts()
                     .done(function (posts) {
-                        tad.Blog.addPosts(posts);
+                        tad.Blog.addPosts(posts.map(function (p) {
+                            return {
+                                title: p.title,
+                                published: new Date(p.published).toLocaleString(),
+                                publishedBy: p.publishedBy.name,
+                                content: p.content
+                            };
+                        }));
+                        $('.loading').hide();
+                    });
+            });
+            $.get('_archive.tmpl.html', function (template) {
+                $('body').append(template);
+                tad.Service.getPublicArchives()
+                    .done(function (archives) {
+                        $(archives).each(function (index, a) {
+                            $('#archive-template')
+                                .tmpl(a)
+                                .prependTo('.archive-list')
+                                .find('a')
+                                .on('click', function () {
+                                    $('.loading').show();
+                                    var date = new Date(a.date);
+                                    tad.Service.getPublicPosts(date.getFullYear(), date.getMonth() + 1)
+                                        .done(function (posts) {
+                                            $('.loading').hide();
+                                            tad.Blog.addPosts(posts.map(function (p) {
+                                                return {
+                                                    title: p.title,
+                                                    published: new Date(p.published).toLocaleString(),
+                                                    publishedBy: p.publishedBy.name,
+                                                    content: p.content
+                                                };
+                                            }));
+                                        });
+                                });
+                        });
                     });
             });
         });

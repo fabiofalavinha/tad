@@ -6,15 +6,16 @@ tad.Blog = (function (Blog, $) {
 
     function expandContent(content, trigger) {
         content.removeClass('collapsed').addClass('expanded');
-        trigger.text('Menos');
+        trigger.text('-');
     };
 
     function collapseContent(content, trigger) {
         content.removeClass('expanded').addClass('collapsed');
-        trigger.text('Mais...');
+        trigger.text('+');
     };
 
     Blog.addPosts = function (posts) {
+        $('.blog-posts-container').html('');
         posts.map(function (post) {
             var postHtml = $('#blog-post-template').tmpl(post);
             postHtml.find('.read-more')
@@ -30,6 +31,8 @@ tad.Blog = (function (Blog, $) {
             $('.blog-posts-container').append(postHtml);
         });
     };
+
+    Blog.convertPost = function (post) { };
 
     return Blog;
 
