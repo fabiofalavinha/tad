@@ -130,7 +130,7 @@
                         tad.Blog.addPosts(posts.map(function (p) {
                             return {
                                 title: p.title,
-                                published: new Date(p.published).toLocaleString(),
+                                published: p.publishedDateFormat,
                                 publishedBy: p.publishedBy.name,
                                 content: p.content
                             };
