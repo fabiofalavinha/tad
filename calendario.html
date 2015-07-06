@@ -130,7 +130,7 @@
                     display_week_numbers: false,
                     weekbox: false,
                     onAfterViewLoad: function(view) {
-                        $('#calendar-header h3').text(this.getTitle());
+                        $('#calendar-header').find('h3').text(this.getTitle());
                         $('.btn-group button').removeClass('active');
                         $('button[data-calendar-view="' + view + '"]').addClass('active');
                     },
