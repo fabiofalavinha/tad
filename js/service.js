@@ -12,19 +12,19 @@ tad.Service = (function (Service, BlogPersitence) {
             .done(function (user) {
                 BlogPersitence.setCurrentUser(user);
             });
-    };
+    }
 
     function changePassword(password, newPassword) {
         return $.post(serverURL + '/changePassword', JSON.stringify({ id: BlogPersitence.getCurrentUser().userName, oldPassword: password, newPassword: newPassword }));
-    };
+    }
 
     function forgotPassword(email) {
         return $.post(serverURL + '/forgotPassword', JSON.stringify({ email: email }));
-    };
+    }
 
     function registerPassword(userName, password) {
         return $.post(serverURL + '/registerPassword', JSON.stringify({ id: userName, password: password }));
-    };
+    }
 
     function getPublicPosts(year, month) {
         var url = serverURL + '/published/posts/PUBLIC';
@@ -32,26 +32,25 @@ tad.Service = (function (Service, BlogPersitence) {
             url = url + '/archive/' + year + '/' + month;
 
         return $.get(url);
-    };
+    }
 
     function getPrivatePosts() {
         return $.get(serverURL + '/published/posts/INTERNAL');
-    };
+    }
 
     function getPublicArchives() {
         return $.get(serverURL + '/post/archives/PUBLIC');
-    };
+    }
 
     function getPrivateArchives() {
         return $.get(serverURL + '/post/archives/INTERNAL');
-    };
+    }
 
     function getPublicEvents(year) {
         return $.get(serverURL + '/events/PUBLIC/' + year);
-    };
+    }
 
     function post(postData, successAction, errorAction) {
-
         $.post(serverURL + '/post', postData)
             .done(function (data) {
                 successAction(data);
@@ -59,8 +58,11 @@ tad.Service = (function (Service, BlogPersitence) {
             .fail(function (ex) {
                 errorAction(ex);
             });
+    }
 
-    };
+    function getCarouselImageNames() {
+        return $.get(serverURL + '/carousel');
+    }
 
     Service.authenticate = authenticate;
     Service.changePassword = changePassword;
@@ -71,6 +73,7 @@ tad.Service = (function (Service, BlogPersitence) {
     Service.getPublicArchives = getPublicArchives;
     Service.getPrivateArchives = getPrivateArchives;
     Service.getPublicEvents = getPublicEvents;
+    Service.getCarouselImageNames = getCarouselImageNames;
 
     return Service;
 
