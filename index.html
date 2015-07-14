@@ -130,6 +130,9 @@
             tad.Service.getPublicPosts()
                 .done(function (posts) {
                     tad.Blog.addPosts(posts.map(function (p) {
+                        if (!p.publishedBy || !p.published) {
+                            return null;
+                        }
                         return {
                             title: p.title,
                             published: p.publishedDateFormat,
