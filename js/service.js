@@ -4,7 +4,7 @@ var tad = tad || {};
 
 tad.Service = (function (Service, BlogPersitence) {
     var useProxy = false;
-    var serverURL = !useProxy ? 'http://faf-box-111242.nitrousapp.com:7139' : 'http://localhost:3000/proxy';
+    var serverURL = !useProxy ? 'http://www.temploamordivino.com.br:7139' : 'http://localhost:3000/proxy';
 
     function authenticate(userName, password) {
         BlogPersitence.setCurrentUser({ id: 'test' });
