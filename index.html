@@ -47,8 +47,6 @@
         <div class="col-sm-7">
             <div id="myCarousel" class="carousel slide" data-ride="carousel" style="width: 450px; height: 255px; margin-bottom: 40px;">
                 <!-- Indicators -->
-                <ol class="carousel-indicators">
-                </ol>
                 <div class="carousel-inner" style="width: 450px; height: 255px;">
                 </div>
                 <a class="left carousel-control" href="#myCarousel" data-slide="prev" style="background-image: linear-gradient(to right,rgba(0,0,0,.0001) 0,rgba(0,0,0,0) 100%);">
@@ -110,10 +108,8 @@
 
         tad.Service.getCarouselImageNames()
             .done(function (result) {
-                var carouselIndicators = $('.carousel-indicators');
                 var carouselContainerImages = $('.carousel-inner');
                 $.each(result, function (index) {
-                    $(carouselIndicators).append('<li data-target="#myCarousel" data-slide-to="' + index + '" class="' + (index == 0 ? 'active' : '') + '"></li>');
                     $(carouselContainerImages).append('<div class="item' + (index == 0 ? ' active' : '') + '"><img style="width: 450px; height: 255px" src="images/app/' + this.name + '" /></div>');
                 });
             })
