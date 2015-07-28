@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -34,12 +34,11 @@
   js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.4&appId=185905244805830";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
-    
+
 <div class="blog-masthead">
     <div class="container">
         <nav class="blog-nav">
             <a class="blog-nav-item active" href="index.html">Início</a>
-            <!--<a class="blog-nav-item" href="area-reservada-login.html">Área Reservada</a>-->
             <a class="blog-nav-item" href="calendario.html">Calendário</a>
             <a class="blog-nav-item" href="como-chegar.html">Como Chegar</a>
             <a class="blog-nav-item" href="#">
@@ -121,6 +120,7 @@
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/docs.min.js"></script>
 <script type="text/javascript" src="js/jquery.tmpl.min.js"></script>
+<script type="text/javascript" src="js/jquery.facebook.min.js"></script>
 
 <script type="text/javascript" src="js/blog.js"></script>
 <script type="text/javascript" src="js/service.js"></script>
@@ -151,6 +151,7 @@
                             return null;
                         }
                         return {
+                            id: p.id,
                             title: p.title,
                             published: p.publishedDateFormat,
                             publishedBy: p.publishedBy.name,
@@ -178,6 +179,7 @@
                                         $('.loading').hide();
                                         tad.Blog.addPosts(posts.map(function (p) {
                                             return {
+                                                id: p.id,
                                                 title: p.title,
                                                 published: p.publishedDateFormat,
                                                 publishedBy: p.publishedBy.name,

@@ -50,6 +50,10 @@ tad.Service = (function (Service, BlogPersitence) {
         return $.get(serverURL + '/events/PUBLIC/' + year);
     }
 
+    function getPostById(id) {
+        return $.get(serverURL + '/post/' + id);
+    }
+    
     function post(postData, successAction, errorAction) {
         $.post(serverURL + '/post', postData)
             .done(function (data) {
@@ -74,6 +78,7 @@ tad.Service = (function (Service, BlogPersitence) {
     Service.getPrivateArchives = getPrivateArchives;
     Service.getPublicEvents = getPublicEvents;
     Service.getCarouselImageNames = getCarouselImageNames;
+    Service.getPostById = getPostById;
 
     return Service;
 

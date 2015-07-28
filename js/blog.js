@@ -16,23 +16,25 @@ tad.Blog = (function (Blog, $) {
 
     Blog.addPosts = function (posts) {
         $('.blog-posts-container').html('');
-        posts.map(function (post) {
-            if (!post) {
-                return;
-            }
-            var postHtml = $('#blog-post-template').tmpl(post);
-            postHtml.find('.read-more')
-                .on('click', function (e) {
-                    e.preventDefault();
-                    var trigger = $(this);
-                    var content = trigger.prev('.blog-post-content');
-                    content.hasClass('collapsed')
-                        ? expandContent(content, trigger)
-                        : collapseContent(content, trigger);
-                });
-
-            $('.blog-posts-container').append(postHtml);
+        posts.map(tad.Blog.addPost);
+    };
+    
+    Blog.addPost = function (post) {
+        if (!post) {
+            return;
+        }
+        var postHtml = $('#blog-post-template').tmpl(post);
+        postHtml.find('.read-more')
+            .on('click', function (e) {
+            e.preventDefault();
+            var trigger = $(this);
+            var content = trigger.prev('.blog-post-content');
+            content.hasClass('collapsed')
+                ? expandContent(content, trigger)
+                : collapseContent(content, trigger);
         });
+
+        $('.blog-posts-container').append(postHtml);        
     };
 
     Blog.convertPost = function (post) { };
