@@ -1,9 +1,21 @@
 <script id="blog-post-template" type="text/x-jquery-tmpl">
     <div class="blog-post">
-        <h2 class="blog-post-title">${title}</h2>
-        <p class="blog-post-meta"><span class="blog-post-published">${published}</span> por <a class="blog-post-publishedBy">${publishedBy}</a></p>
-        <div class="fb-share-button" data-href="http://www.temploamordivino.com.br/post.html?id=${id}" data-layout="icon_link"></div>
-        <div class="blog-post-content collapsed">{{html content}}</div>
-        <a href="#" class="btn btn-primary read-more">Ler mais</a>
+        <div class="row">
+            <div class="col-sm-7">
+                <div class="row">
+                    <h2 class="blog-post-title">${title}</h2>
+                </div>
+                <div class="row">
+                    <p class="blog-post-meta"><span class="blog-post-published">${published}</span> por <a class="blog-post-publishedBy">${publishedBy}</a></p>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div id="share-facebook-${id}" data-url="http://www.temploamordivino.com.br/post.html?id=${id}" data-text="${title}" data-title="Like" class="facebook"></div>            
+            </div>
+        </div>
+        <div class="row">
+            <div class="blog-post-content collapsed">{{html content}}</div>
+            <a href="#" class="btn btn-primary read-more">Ler mais</a>
+        </div>
     </div>
 </script>

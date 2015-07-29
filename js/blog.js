@@ -33,8 +33,22 @@ tad.Blog = (function (Blog, $) {
                 ? expandContent(content, trigger)
                 : collapseContent(content, trigger);
         });
+        
+        postHtml.find('#share-facebook-' + post.id).sharrre({
+          share: {
+            facebook: true
+          },
+          buttons: {
+            facebook: {
+                layout: 'box_count'
+            }
+          },
+          enableHover: false,
+          enableCounter: false,
+          enableTracking: true
+        });
 
-        $('.blog-posts-container').append(postHtml);        
+        $('.blog-posts-container').append(postHtml);
     };
 
     Blog.convertPost = function (post) { };
