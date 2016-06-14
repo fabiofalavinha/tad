@@ -31,27 +31,63 @@ tad.Service = (function (Service, BlogPersitence) {
         if (!!year && !!month)
             url = url + '/archive/' + year + '/' + month;
 
-        return $.get(url);
+        return $.ajax({
+          url: url,
+          type: 'GET',
+          async: false,
+          contentType: 'application/json; charset=utf-8',
+          dataType: 'json'
+        });
     }
 
     function getPrivatePosts() {
-        return $.get(serverURL + '/published/posts/INTERNAL');
+        return $.ajax({
+          url: serverURL + '/published/posts/INTERNAL',
+          type: 'GET',
+          async: false,
+          contentType: 'application/json; charset=utf-8',
+          dataType: 'json'
+        });
     }
 
     function getPublicArchives() {
-        return $.get(serverURL + '/post/archives/PUBLIC');
+        return $.ajax({
+          url: serverURL + '/post/archives/PUBLIC',
+          type: 'GET',
+          async: false,
+          contentType: 'application/json; charset=utf-8',
+          dataType: 'json'
+        });
     }
 
     function getPrivateArchives() {
-        return $.get(serverURL + '/post/archives/INTERNAL');
+        return $.ajax({
+          url: serverURL + '/post/archives/INTERNAL',
+          type: 'GET',
+          async: false,
+          contentType: 'application/json; charset=utf-8',
+          dataType: 'json'
+        });
     }
 
     function getPublicEvents(year) {
-        return $.get(serverURL + '/events/PUBLIC/' + year);
+        return $.ajax({
+          url: serverURL + '/events/PUBLIC/' + year,
+          type: 'GET',
+          async: false,
+          contentType: 'application/json; charset=utf-8',
+          dataType: 'json'
+        });
     }
 
     function getPostById(id) {
-        return $.get(serverURL + '/post/' + id);
+        return $.ajax({
+          url: serverURL + '/post/' + id,
+          type: 'GET',
+          async: false,
+          contentType: 'application/json; charset=utf-8',
+          dataType: 'json'
+        });
     }
     
     function post(postData, successAction, errorAction) {
@@ -65,7 +101,13 @@ tad.Service = (function (Service, BlogPersitence) {
     }
 
     function getCarouselImageNames() {
-        return $.get(serverURL + '/carousel');
+        return $.ajax({
+          url: serverURL + '/carousel',
+          type: 'GET',
+          async: false,
+          contentType: 'application/json; charset=utf-8',
+          dataType: 'json'
+        });
     }
 
     Service.authenticate = authenticate;
