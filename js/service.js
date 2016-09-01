@@ -34,7 +34,7 @@ tad.Service = (function (Service, BlogPersitence) {
         return $.ajax({
           url: url,
           type: 'GET',
-          async: false,
+          async: true,
           contentType: 'application/json; charset=utf-8',
           dataType: 'json'
         });
@@ -44,7 +44,7 @@ tad.Service = (function (Service, BlogPersitence) {
         return $.ajax({
           url: serverURL + '/published/posts/INTERNAL',
           type: 'GET',
-          async: false,
+          async: true,
           contentType: 'application/json; charset=utf-8',
           dataType: 'json'
         });
@@ -54,7 +54,7 @@ tad.Service = (function (Service, BlogPersitence) {
         return $.ajax({
           url: serverURL + '/post/archives/PUBLIC',
           type: 'GET',
-          async: false,
+          async: true,
           contentType: 'application/json; charset=utf-8',
           dataType: 'json'
         });
@@ -64,7 +64,7 @@ tad.Service = (function (Service, BlogPersitence) {
         return $.ajax({
           url: serverURL + '/post/archives/INTERNAL',
           type: 'GET',
-          async: false,
+          async: true,
           contentType: 'application/json; charset=utf-8',
           dataType: 'json'
         });
@@ -74,7 +74,7 @@ tad.Service = (function (Service, BlogPersitence) {
         return $.ajax({
           url: serverURL + '/events/PUBLIC/' + year,
           type: 'GET',
-          async: false,
+          async: true,
           contentType: 'application/json; charset=utf-8',
           dataType: 'json'
         });
@@ -84,7 +84,7 @@ tad.Service = (function (Service, BlogPersitence) {
         return $.ajax({
           url: serverURL + '/post/' + id,
           type: 'GET',
-          async: false,
+          async: true,
           contentType: 'application/json; charset=utf-8',
           dataType: 'json'
         });
@@ -104,7 +104,7 @@ tad.Service = (function (Service, BlogPersitence) {
         return $.ajax({
           url: serverURL + '/carousel',
           type: 'GET',
-          async: false,
+          async: true,
           contentType: 'application/json; charset=utf-8',
           dataType: 'json'
         });

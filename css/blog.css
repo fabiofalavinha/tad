@@ -30,8 +30,16 @@ h6, .h6 {
         width: 100%;
     }
 
+    #myCarousel {
+        width: 360px;
+    }
+    
+    .carousel-inner {
+        width: 360px;
+    }
+    
     .carousel-inner .item img {
-        width: 10%;
+        width: 360%;
         height: 50%;
         top: 140px;
     }
@@ -43,6 +51,14 @@ h6, .h6 {
         width: 100%;
     }
 
+    #myCarousel {
+        width: 360px;
+    }
+
+    .carousel-inner {
+        width: 360px;
+    }
+    
     .carousel-inner .item img {
         width: 10%;
         height: 50%;
@@ -56,17 +72,31 @@ h6, .h6 {
         width: 100%;
     }
 
-    .carousel-inner .item img {
-        width: 10%;
-        height: 50%;
-        top: 140px;
+    #myCarousel {
+        width: 360px;
     }
+    
+    .carousel-inner {
+        width: 360px;
+    }
+    
+        .carousel-inner .item img {
+            width: 10%;
+            height: 50%;
+            top: 140px;
+        }
 }
 
 /* iPads (portrait and landscape) ----------- */
 @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
     #headerImage {
         width: 100%;
+    }
+    #myCarousel {
+        width: 450px;
+    }
+    .carousel-inner {
+        width: 450px;
     }
 }
 
@@ -75,6 +105,12 @@ h6, .h6 {
     #headerImage {
         width: 100%;
     }
+    #myCarousel {
+        width: 450px;
+    }
+    .carousel-inner {
+        width: 450px;
+    }
 }
 
 /* iPads (portrait) ----------- */
@@ -82,12 +118,24 @@ h6, .h6 {
     #headerImage {
         width: 100%;
     }
+    #myCarousel {
+        width: 450px;
+    }
+    .carousel-inner {
+        width: 450px;
+    }
 }
 
 /* Desktops and laptops ----------- */
 @media only screen and (min-width : 1224px) {
     #headerImage {
         width: 100%;
+    }
+    #myCarousel {
+        width: 450px;
+    }
+    .carousel-inner {
+        width: 450px;
     }
 }
 
