@@ -81,7 +81,7 @@
         if (typeof url == 'undefined') {
             url = window.location.search;
         }
-        var url = url.split('#')[0];
+        url = url.split('#')[0];
         var queryString = url.split('?')[1];
         if (!queryString) {
             if (url.search('=') !== false) {

@@ -26,70 +26,80 @@ tad.Service = (function (Service, BlogPersitence) {
         return $.post(serverURL + '/registerPassword', JSON.stringify({ id: userName, password: password }));
     }
 
-    function getPublicPosts(year, month) {
-        var url = serverURL + '/published/posts/PUBLIC';
-        if (!!year && !!month)
-            url = url + '/archive/' + year + '/' + month;
+    function getPublicPosts(year, month, pageNumber) {
+        pageNumber = !!pageNumber ? pageNumber : parseInt($("#searchCurrentPage").val());
 
+        var queryString = '/' + pageNumber;
+
+        var url = serverURL + '/published/posts/PUBLIC';
+        if (!!year && year > 0 && !!month && month > 0) {
+            url = url + '/archive/' + year + '/' + month + queryString;
+            $("#filterArchiveYear").val(year);
+            $("#filterArchiveMonth").val(month);
+        } else {
+            url = url + queryString;
+            $("#filterArchiveYear").val("");
+            $("#filterArchiveMonth").val("");
+        }
         return $.ajax({
-          url: url,
-          type: 'GET',
-          async: true,
-          contentType: 'application/json; charset=utf-8',
-          dataType: 'json'
+            url: url,
+            type: 'GET',
+            async: true,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json'
         });
     }
 
     function getPrivatePosts() {
         return $.ajax({
-          url: serverURL + '/published/posts/INTERNAL',
-          type: 'GET',
-          async: true,
-          contentType: 'application/json; charset=utf-8',
-          dataType: 'json'
+            url: serverURL + '/published/posts/INTERNAL',
+            type: 'GET',
+            async: true,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json'
         });
     }
 
     function getPublicArchives() {
         return $.ajax({
-          url: serverURL + '/post/archives/PUBLIC',
-          type: 'GET',
-          async: true,
-          contentType: 'application/json; charset=utf-8',
-          dataType: 'json'
+            url: serverURL + '/post/archives/PUBLIC',
+            type: 'GET',
+            async: true,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json'
         });
     }
 
     function getPrivateArchives() {
         return $.ajax({
-          url: serverURL + '/post/archives/INTERNAL',
-          type: 'GET',
-          async: true,
-          contentType: 'application/json; charset=utf-8',
-          dataType: 'json'
+            url: serverURL + '/post/archives/INTERNAL',
+            type: 'GET',
+            async: true,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json'
         });
     }
 
     function getPublicEvents(year) {
         return $.ajax({
-          url: serverURL + '/events/PUBLIC/' + year,
-          type: 'GET',
-          async: true,
-          contentType: 'application/json; charset=utf-8',
-          dataType: 'json'
+            url: serverURL + '/events/PUBLIC/' + year,
+            type: 'GET',
+            async: true,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json'
         });
     }
 
     function getPostById(id) {
         return $.ajax({
-          url: serverURL + '/post/' + id,
-          type: 'GET',
-          async: true,
-          contentType: 'application/json; charset=utf-8',
-          dataType: 'json'
+            url: serverURL + '/post/' + id,
+            type: 'GET',
+            async: true,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json'
         });
     }
-    
+
     function post(postData, successAction, errorAction) {
         $.post(serverURL + '/post', postData)
             .done(function (data) {
@@ -102,11 +112,11 @@ tad.Service = (function (Service, BlogPersitence) {
 
     function getCarouselImageNames() {
         return $.ajax({
-          url: serverURL + '/carousel',
-          type: 'GET',
-          async: true,
-          contentType: 'application/json; charset=utf-8',
-          dataType: 'json'
+            url: serverURL + '/carousel',
+            type: 'GET',
+            async: true,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json'
         });
     }
 

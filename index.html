@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -22,25 +22,25 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    
+
     <style>
         .sharrre .button {
             float:left;
             width:60px;
-        }      
+        }
     </style>
-        
+
 </head>
 
 <body>
 
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.4&appId=185905244805830";
-  fjs.parentNode.insertBefore(js, fjs);
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.4&appId=185905244805830";
+    fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 
 <div class="blog-masthead">
@@ -51,19 +51,23 @@
             <a class="blog-nav-item" href="como-chegar.html">Como Chegar</a>
             <a class="blog-nav-item" href="#">
                 <div class="btn-group">
-                  <button class="btn btn-primary">Arquivos</button>
-                  <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                    <span class="caret"></span>
-                  </button>
-                  <ul id="archive-list-menu" class="dropdown-menu"></ul>
-                </div>               
+                    <button class="btn btn-primary">Arquivos</button>
+                    <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                    </button>
+                    <ul id="archive-list-menu" class="dropdown-menu"></ul>
+                </div>
             </a>
-            
+
         </nav>
     </div>
 </div>
 
 <div class="container">
+
+    <input type="hidden" id="filterArchiveYear" value=""/>
+    <input type="hidden" id="filterArchiveMonth" value=""/>
+    <input type="hidden" id="searchCurrentPage" value="1"/>
 
     <div class="blog-header">
         <img id="headerImage" src="images/header.jpg" style="width: 94%" />
@@ -105,9 +109,11 @@
         <div class="col-sm-10 blog-main">
             <span class="btn btn-lg btn-warning loading" style="cursor: default; margin-bottom: 1em;"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Carregando posts...</span>
             <div class="blog-posts-container"></div>
+            <a id="previousButton" class="btn btn-lg btn-primary" style="float: left; display: none;" href="#" role="button">Anterior</a>
+            <a id="nextButton" class="btn btn-lg btn-primary" style="float: right; display: none;" href="#" role="button">Próximo</a>
         </div>
     </div>
-
+    <div class="row"><br/></div>
 </div>
 
 <div class="blog-footer">
@@ -137,79 +143,154 @@
     $(function () {
         $('.loading').show();
 
+        $('#previousButton').on('click', function () {
+            $('.loading').show();
+
+            var currentPage = parseInt($("#searchCurrentPage").val());
+            currentPage = currentPage - 1;
+
+            var archiveYearFilter = $("#filterArchiveYear").val();
+            var archiveMonthFilter = $("#filterArchiveMonth").val();
+
+            tad.Service.getPublicPosts(archiveYearFilter, archiveMonthFilter, currentPage)
+                    .done(function (postPageableResult) {
+                        console.log(postPageableResult);
+                        var posts = postPageableResult.posts;
+                        $("#searchCurrentPage").val(postPageableResult.pageNumber);
+                        $('#previousButton').css('display', postPageableResult.hasPrevious ? 'block' : 'none');
+                        $('#nextButton').css('display', postPageableResult.hasNext ? 'block' : 'none');
+
+                        tad.Blog.addPosts(posts.map(function (p) {
+                            if (!p.publishedBy || !p.published) {
+                                return null;
+                            }
+                            return {
+                                id: p.id,
+                                title: p.title,
+                                published: p.publishedDateFormat,
+                                publishedBy: p.publishedBy.name,
+                                content: p.content
+                            };
+                        }));
+                        $('.loading').hide();
+                    });
+        });
+
+        $('#nextButton').on('click', function () {
+            $('.loading').show();
+
+            var currentPage = parseInt($("#searchCurrentPage").val());
+            currentPage = currentPage + 1;
+
+            var archiveYearFilter = $("#filterArchiveYear").val();
+            var archiveMonthFilter = $("#filterArchiveMonth").val();
+
+            tad.Service.getPublicPosts(archiveYearFilter, archiveMonthFilter, currentPage)
+                    .done(function (postPageableResult) {
+                        var posts = postPageableResult.posts;
+                        $("#searchCurrentPage").val(postPageableResult.pageNumber);
+                        $('#previousButton').css('display', postPageableResult.hasPrevious ? 'block' : 'none');
+                        $('#nextButton').css('display', postPageableResult.hasNext ? 'block' : 'none');
+
+                        tad.Blog.addPosts(posts.map(function (p) {
+                            if (!p.publishedBy || !p.published) {
+                                return null;
+                            }
+                            return {
+                                id: p.id,
+                                title: p.title,
+                                published: p.publishedDateFormat,
+                                publishedBy: p.publishedBy.name,
+                                content: p.content
+                            };
+                        }));
+                        $('.loading').hide();
+                    });
+        });
+
         tad.Service.getCarouselImageNames()
-            .done(function (result) {
-                var carouselContainerImages = $('.carousel-inner');
-                $.each(result, function (index) {
-                    $(carouselContainerImages).append('<div class="item' + (index == 0 ? ' active' : '') + '"><img style="width: 450px; height: 255px" src="images/app/' + this.name + '" /></div>');
+                .done(function (result) {
+                    var carouselContainerImages = $('.carousel-inner');
+                    $.each(result, function (index) {
+                        $(carouselContainerImages).append('<div class="item' + (index == 0 ? ' active' : '') + '"><img style="width: 450px; height: 255px" src="images/app/' + this.name + '" /></div>');
+                    });
+                })
+                .fail(function (error) {
+                    alert(error);
                 });
-            })
-            .fail(function (error) {
-                alert(error);
-            });
 
         $.get('_blog.tmpl.html', function (template) {
             $('body').append(template);
             tad.Service.getPublicPosts()
-                .done(function (posts) {
-                    tad.Blog.addPosts(posts.map(function (p) {
-                        if (!p.publishedBy || !p.published) {
-                            return null;
-                        }
-                        return {
-                            id: p.id,
-                            title: p.title,
-                            published: p.publishedDateFormat,
-                            publishedBy: p.publishedBy.name,
-                            content: p.content
-                        };
-                    }));
-                    $('.loading').hide();
-                });
+                    .done(function (postPageableResult) {
+                        var posts = postPageableResult.posts;
+                        $("#searchCurrentPage").val(postPageableResult.pageNumber);
+                        $('#previousButton').css('display', postPageableResult.hasPrevious ? 'block' : 'none');
+                        $('#nextButton').css('display', postPageableResult.hasNext ? 'block' : 'none');
+
+                        tad.Blog.addPosts(posts.map(function (p) {
+                            if (!p.publishedBy || !p.published) {
+                                return null;
+                            }
+                            return {
+                                id: p.id,
+                                title: p.title,
+                                published: p.publishedDateFormat,
+                                publishedBy: p.publishedBy.name,
+                                content: p.content
+                            };
+                        }));
+                        $('.loading').hide();
+                    });
         });
 
         $.get('_archive.tmpl.html', function (template) {
             $('body').append(template);
             tad.Service.getPublicArchives()
-                .done(function (archives) {
-                    $(archives).each(function (index, a) {
-                        $('#archive-template')
-                            .tmpl(a)
-                            .prependTo('#archive-list-menu')
-                            .find('a')
-                            .on('click', function () {
-                                $('.loading').show();
-                                var date = new Date(a.date);
-                                tad.Service.getPublicPosts(date.getFullYear(), date.getMonth() + 1)
-                                    .done(function (posts) {
-                                        $('.loading').hide();
-                                        tad.Blog.addPosts(posts.map(function (p) {
-                                            return {
-                                                id: p.id,
-                                                title: p.title,
-                                                published: p.publishedDateFormat,
-                                                publishedBy: p.publishedBy.name,
-                                                content: p.content
-                                            };
-                                        }));
+                    .done(function (archives) {
+                        $(archives).each(function (index, a) {
+                            $('#archive-template')
+                                    .tmpl(a)
+                                    .prependTo('#archive-list-menu')
+                                    .find('a')
+                                    .on('click', function () {
+                                        $('.loading').show();
+                                        var date = new Date(a.date);
+                                        tad.Service.getPublicPosts(date.getFullYear(), date.getMonth() + 1)
+                                                .done(function (postPageableResult) {
+                                                    var posts = postPageableResult.posts;
+                                                    $("#searchCurrentPage").val(postPageableResult.pageNumber);
+                                                    $('#previousButton').css('display', postPageableResult.hasPrevious ? 'block' : 'none');
+                                                    $('#nextButton').css('display', postPageableResult.hasNext ? 'block' : 'none');
+
+                                                    $('.loading').hide();
+                                                    tad.Blog.addPosts(posts.map(function (p) {
+                                                        return {
+                                                            id: p.id,
+                                                            title: p.title,
+                                                            published: p.publishedDateFormat,
+                                                            publishedBy: p.publishedBy.name,
+                                                            content: p.content
+                                                        };
+                                                    }));
+                                                });
                                     });
-                            });
+                        });
                     });
-                });
         });
-        
+
     });
 
 </script>
-    
-<script type="text/javascript">
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-27107246-1', 'auto');
-  ga('send', 'pageview');
+<script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-27107246-1', 'auto');
+    ga('send', 'pageview');
 </script>
 
 </body>
