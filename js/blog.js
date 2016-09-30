@@ -4,15 +4,15 @@ var tad = tad || {};
 
 tad.Blog = (function (Blog, $) {
 
-    function expandContent(content, trigger) {
-        content.removeClass('collapsed').addClass('expanded');
-        trigger.text('[Ocultar texto]');
-    };
+//     function expandContent(content, trigger) {
+//         content.removeClass('collapsed').addClass('expanded');
+//         trigger.text('[Ocultar texto]');
+//     };
 
-    function collapseContent(content, trigger) {
-        content.removeClass('expanded').addClass('collapsed');
-        trigger.text('[Ler mais]');
-    };
+//     function collapseContent(content, trigger) {
+//         content.removeClass('expanded').addClass('collapsed');
+//         trigger.text('[Ler mais]');
+//     };
 
     Blog.addPosts = function (posts) {
         $('.blog-posts-container').html('');
@@ -24,15 +24,17 @@ tad.Blog = (function (Blog, $) {
             return;
         }
         var postHtml = $('#blog-post-template').tmpl(post);
-        postHtml.find('.read-more')
-            .on('click', function (e) {
-                e.preventDefault();
-                var trigger = $(this);
-                var content = trigger.prev('.blog-post-content');
-                content.hasClass('collapsed')
-                    ? expandContent(content, trigger)
-                    : collapseContent(content, trigger);
-            });
+        /*
+         postHtml.find('.read-more')
+         .on('click', function (e) {
+         e.preventDefault();
+         var trigger = $(this);
+         var content = trigger.prev('.blog-post-content');
+         content.hasClass('collapsed')
+         ? expandContent(content, trigger)
+         : collapseContent(content, trigger);
+         });
+         */
 
         postHtml.find('#share-facebook-' + post.id).sharrre({
             share: {

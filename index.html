@@ -103,6 +103,16 @@
                     </div>
                 </div>
             </div>
+            <!--
+            <div class="sidebar-module sidebar-module-inset">
+                <h4>Newsletter</h4>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Nome...">
+                    <input type="text" class="form-control" placeholder="e-Mail...">
+                    <button class="btn btn-default" type="button">Registre-se</button>
+                </div>
+            </div>
+            -->
         </div>
     </div>
     <div class="row">
@@ -154,7 +164,6 @@
 
             tad.Service.getPublicPosts(archiveYearFilter, archiveMonthFilter, currentPage)
                     .done(function (postPageableResult) {
-                        console.log(postPageableResult);
                         var posts = postPageableResult.posts;
                         $("#searchCurrentPage").val(postPageableResult.pageNumber);
                         $('#previousButton').css('display', postPageableResult.hasPrevious ? 'block' : 'none');
