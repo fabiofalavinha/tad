@@ -4,7 +4,7 @@ var tad = tad || {};
 
 tad.Service = (function (Service, BlogPersitence) {
     var useProxy = false;
-    var serverURL = !useProxy ? 'http://www.temploamordivino.com.br:7139' : 'http://localhost:3000/proxy';
+    var serverURL = !useProxy ? 'http://200.98.140.156:7139' : 'http://localhost:3000/proxy';
 
     function authenticate(userName, password) {
         BlogPersitence.setCurrentUser({ id: 'test' });
